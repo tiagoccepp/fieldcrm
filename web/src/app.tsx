@@ -5,6 +5,7 @@ import { flush, useOnline, useOutbox } from "./lib/outbox";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { SyncDrawer } from "./components/SyncDrawer";
 import { LoginPage } from "./pages/Login";
+import { DashboardPage } from "./pages/Dashboard";
 import { JobsPage } from "./pages/Jobs";
 import { JobDetailPage } from "./pages/JobDetail";
 import { NewJobPage } from "./pages/NewJob";
@@ -33,6 +34,7 @@ function Shell({ me, onLogout }: { me: Me; onLogout: () => void }) {
         <p className="mt-0.5 truncate text-xs text-accent-dk">{me.orgName}</p>
         <nav className="mt-6 grid gap-1 text-sm" aria-label="Primary">
           {[
+            ["/dashboard", "Dashboard"],
             ["/jobs", "Jobs"],
             ["/customers", "Customers"],
             ["/followups", "Follow-ups"],
@@ -54,6 +56,9 @@ function Shell({ me, onLogout }: { me: Me; onLogout: () => void }) {
         </div>
       </aside>
       <div>
+        <div className="border-b border-warn/30 bg-warn/10 px-4 py-1 text-center text-xs font-semibold text-warn" role="note">
+          Demo data — fictional window-cleaning shop, all names and numbers invented
+        </div>
         <header className="flex items-center justify-between border-b border-line bg-card px-4 py-2">
           <p className="text-sm text-muted">
             {online ? "● Online" : "○ Offline — writes queue locally"}
@@ -70,13 +75,14 @@ function Shell({ me, onLogout }: { me: Me; onLogout: () => void }) {
         <main className="mx-auto max-w-6xl p-4 md:p-6">
           <ErrorBoundary>
             <Routes>
+              <Route path="/dashboard" element={<DashboardPage refreshKey={refreshKey} />} />
               <Route path="/jobs" element={<JobsPage me={me} refreshKey={refreshKey} />} />
               <Route path="/jobs/new" element={<NewJobPage />} />
               <Route path="/jobs/:id" element={<JobDetailPage refreshKey={refreshKey} />} />
               <Route path="/customers" element={<CustomersPage me={me} />} />
               <Route path="/followups" element={<FollowupsPage me={me} />} />
               <Route path="/stats" element={<StatsPage />} />
-              <Route path="*" element={<Navigate to="/jobs" replace />} />
+              <Route path="*" element={<Navigate to="/dashboard" replace />} />
             </Routes>
           </ErrorBoundary>
         </main>

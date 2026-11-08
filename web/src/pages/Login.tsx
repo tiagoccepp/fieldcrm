@@ -17,7 +17,7 @@ export function LoginPage({ onLogin }: { onLogin: () => void }) {
     try {
       await api("/api/auth/login", { method: "POST", json: { email, password } });
       onLogin();
-      nav("/jobs");
+      nav("/dashboard");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Login failed");
     } finally {
@@ -28,9 +28,9 @@ export function LoginPage({ onLogin }: { onLogin: () => void }) {
   return (
     <div className="mx-auto mt-16 w-full max-w-sm px-4">
       <div className="mb-6 text-center">
-        <p className="mono text-xs uppercase tracking-widest text-muted">Blue Ridge Plumbing · demo</p>
+        <p className="mono text-xs uppercase tracking-widest text-muted">Blue Ridge Window Cleaning · demo</p>
         <h1 className="mt-1 text-3xl font-bold">FieldCRM</h1>
-        <p className="mt-1 text-sm text-muted">Jobs, customers and follow-ups — online or off.</p>
+        <p className="mt-1 text-sm text-muted">Today&apos;s jobs, crews and revenue — online or off.</p>
       </div>
       <Card className="p-6">
         <form onSubmit={submit} className="grid gap-4">

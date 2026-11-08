@@ -18,7 +18,7 @@ export interface DraftResult {
 }
 
 const SYSTEM = [
-  "You write short follow-up SMS drafts for a home-service company (plumbing/HVAC).",
+  "You write short follow-up SMS drafts for a window-cleaning company.",
   "Rules: under 320 chars, one clear next step, no invented prices or dates,",
   "plain text only, sign as the company. Return JSON: {\"draft\": \"...\"}.",
 ].join(" ");
@@ -26,7 +26,7 @@ const SYSTEM = [
 export function mockDraft(input: DraftInput): string {
   const job = input.jobTitle ? ` about "${input.jobTitle}"` : "";
   return (
-    `Hi ${input.customerName}, this is Blue Ridge Plumbing following up${job}: ` +
+    `Hi ${input.customerName}, this is Blue Ridge Window Cleaning following up${job}: ` +
     `${input.followupTitle}. Reply YES and we will schedule you this week. ` +
     `Questions? Call us back at this number.`
   ).slice(0, 320);

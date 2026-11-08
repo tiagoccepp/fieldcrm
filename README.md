@@ -6,7 +6,7 @@
 
 **🚀 Live demo:** https://fieldcrm-60xk.onrender.com (login: luis@blueridge.example / Demo1234! · free tier sleeps after 15 min idle, first load ~60s) · **🎬 Demo video:** `demo/demo-kanban.webm` · **📸 Screenshots:** `screenshots/` (kanban, job checklist, follow-ups, stats, sync queue + responsive 390/768px)
 
-**Demo shop:** Blue Ridge Plumbing — a fictional Denver CO business. All content is seed data.
+**Demo shop:** Blue Ridge Window Cleaning — a fictional Denver CO business. All content is seed data.
 
 ## The problem it solves
 

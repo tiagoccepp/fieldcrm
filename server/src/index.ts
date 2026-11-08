@@ -9,6 +9,7 @@ import { followupsRouter } from "./routes/followups.js";
 import { analyticsRouter } from "./routes/analytics.js";
 import { webhooksRouter } from "./routes/webhooks.js";
 import { opsRouter } from "./routes/ops.js";
+import { usersRouter } from "./routes/users.js";
 import {
   accessLog,
   rateLimit,
@@ -35,6 +36,7 @@ export function createApp() {
   app.use("/api/jobs", jobsRouter);
   app.use("/api/followups", followupsRouter);
   app.use("/api/analytics", analyticsRouter);
+  app.use("/api/users", usersRouter);
   app.use("/api", opsRouter);
 
   // Serve the built web console (Docker) when present; API 404s stay JSON.

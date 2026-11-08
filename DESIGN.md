@@ -1,6 +1,6 @@
 # DESIGN.md — FieldCRM ops console (portfolio demo)
 
-Fictional home-service CRM for a fictional US shop ("Blue Ridge Plumbing", Denver CO).
+Fictional home-service CRM for a fictional US shop ("Blue Ridge Window Cleaning", Denver CO).
 Audience: the Blueworks hiring team judging full-stack craft in 60 seconds.
 ONE primary action per screen: advance the job (kanban) / log the follow-up (CRM).
 
