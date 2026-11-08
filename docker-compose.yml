@@ -1,0 +1,11 @@
+services:
+  db:
+    image: public.ecr.aws/docker/library/postgres:16-alpine
+    environment:
+      POSTGRES_USER: fieldcrm
+      POSTGRES_PASSWORD: fieldcrm
+      POSTGRES_DB: fieldcrm
+    ports: ["5433:5432"]
+    volumes: ["pgdata:/var/lib/postgresql/data"]
+volumes:
+  pgdata:
