@@ -4,7 +4,7 @@
 
 ![React](https://img.shields.io/badge/React-18-blue) ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue) ![Node](https://img.shields.io/badge/Node-22-green) ![Postgres](https://img.shields.io/badge/PostgreSQL-16-blue) ![Tests](https://img.shields.io/badge/tests-32_Vitest-brightgreen)
 
-**🚧 Live demo:** coming with the Render deploy (see `docs/DEPLOY.md` + `render.yaml`) · **🎬 Demo video:** `demo/demo-kanban.webm` · **📸 Screenshots:** `screenshots/` (kanban, job checklist, follow-ups, stats, sync queue + responsive 390/768px)
+**🚀 Live demo:** https://fieldcrm-60xk.onrender.com (login: luis@blueridge.example / Demo1234! · free tier sleeps after 15 min idle, first load ~60s) · **🎬 Demo video:** `demo/demo-kanban.webm` · **📸 Screenshots:** `screenshots/` (kanban, job checklist, follow-ups, stats, sync queue + responsive 390/768px)
 
 **Demo shop:** Blue Ridge Plumbing — a fictional Denver CO business. All content is seed data.
 
