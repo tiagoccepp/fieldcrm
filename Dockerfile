@@ -21,4 +21,4 @@ RUN npm prune -w shared -w server --omit=dev --no-audit --no-fund 2>/dev/null ||
 COPY --from=web-build /app/web/dist /app/server/public
 ENV NODE_ENV=production PORT=10000
 EXPOSE 10000
-CMD ["node", "server/dist/index.js"]
+CMD ["sh", "-c", "node server/dist/migrate.js && node server/dist/seed.js && node server/dist/index.js"]
