@@ -1,93 +1,70 @@
-# FieldCRM — offline-first mini-CRM for home-service shops
+# FieldCRM — Offline-First Mini-CRM for Home-Service Shops
 
-A complete full-stack demo: multi-tenant auth, jobs pipeline (kanban), customers,
-follow-ups with AI drafts, analytics, Stripe/Twilio webhooks, and an offline
-outbox so field techs keep working without signal.
+> Kanban pipeline, customers, AI-drafted follow-ups, analytics, and an offline outbox — so field techs keep working with zero signal.
 
-**Demo shop:** Blue Ridge Plumbing, a fictional Denver CO business. All content
-is sample data from the seed — no real client data.
+![React](https://img.shields.io/badge/React-18-blue) ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue) ![Node](https://img.shields.io/badge/Node-22-green) ![Postgres](https://img.shields.io/badge/PostgreSQL-16-blue) ![Tests](https://img.shields.io/badge/tests-32_Vitest-brightgreen)
 
-**Live demo:** coming with the Render deploy (see `docs/DEPLOY.md`) ·
-**Companion lib:** `offline-outbox-js` (extracted sync engine, 36 tests)
+**🚧 Live demo:** coming with the Render deploy (see `docs/DEPLOY.md` + `render.yaml`) · **🎬 Demo video:** `demo/demo-kanban.webm` · **📸 Screenshots:** `screenshots/` (kanban, job checklist, follow-ups, stats, sync queue + responsive 390/768px)
 
-## 60 seconds
+**Demo shop:** Blue Ridge Plumbing — a fictional Denver CO business. All content is seed data.
+
+## The problem it solves
+
+Home-service shops lose follow-ups and field updates fall through the cracks the moment a tech loses signal. FieldCRM is a complete full-stack demo: multi-tenant auth, a jobs pipeline, customer records, follow-ups with AI-drafted SMS, revenue analytics, Stripe/Twilio webhooks — and a durable offline outbox so field writes queue instead of failing.
+
+## Quickstart (60 seconds)
 
 ```bash
 docker compose up -d            # postgres 16
 npm ci && npm run build
 npm run seed -w server          # demo org + users + jobs
-npm run dev:server              # :8100  (serves API; web via vite below)
-npm run dev:web                 # :5174 → login luis@blueridge.example / Demo1234!
+npm run dev:server              # :8100 API
+npm run dev:web                 # :5174 → luis@blueridge.example / Demo1234!
 ```
 
-Then: advance a job on the kanban → toggle steps on the job page → open a
-follow-up and generate its SMS draft → check Stats. Toggle DevTools offline and
-watch writes queue in the Sync drawer instead of failing.
+Try it: advance a job on the kanban → toggle checklist steps on the job page → open a follow-up and generate its SMS draft → check Stats. Toggle DevTools offline and watch writes queue in the Sync drawer.
 
-## Stack (mirrors the target role)
+## Stack
 
 | Layer | Choice |
 |---|---|
-| Web | React 18 + TypeScript + Vite, Tailwind v4, shadcn/ui-idiom components |
+| Web | React 18 + TypeScript + Vite, Tailwind v4 |
 | API | Node 22 + Express 5 + TypeScript |
-| Data | PostgreSQL 16 + Drizzle ORM (Neon-compatible `DATABASE_URL`) |
+| Data | PostgreSQL 16 + Drizzle ORM (`DATABASE_URL`, Neon-compatible) |
 | Auth | scrypt passwords + opaque sessions (httpOnly cookies), per-org isolation |
 | AI | OpenAI-compatible draft seam, mock by default (`docs/PROVIDERS.md`) |
 | Webhooks | Stripe + Twilio signature verification + idempotency |
 | Mobile | Capacitor config for the web build (`docs/MOBILE.md`) |
 | Deploy | Docker + `render.yaml` (Render web, Neon database) |
 
-## How it maps to a home-service CRM role
-
-| Requirement | Evidence |
-|---|---|
-| React/Node/TypeScript/Postgres | This repo, end to end |
-| Internal CRM (client follow-ups) | Follow-ups page: due list, AI SMS drafts, done trail |
-| Offline mode | Outbox drawer + durable queue; step toggles + advances work offline |
-| Multi-tenant security | `orgId` on every query, proven by `authz` tests (cross-org → 404) |
-| Auth + webhooks | Sessions, roles (owner/dispatcher/tech), Stripe/Twilio verify + replay tests |
-| Analytics | Stats page: pipeline, revenue by tech, on-time %, overdue follow-ups |
-| Observability | JSON logs (Coralogix-shaped), UI error boundary → `/api/client-errors` |
-| AI-native workflow | Built with Claude Code; every line reviewed (see `ARCHITECTURE.md`) |
-
 ## Repo map
 
 ```
 server/          Express API + Drizzle schema + Vitest suite (32 tests)
   src/routes/    auth, customers, jobs, followups, analytics, webhooks, ops
-  src/lib/       db, auth, password (scrypt), ai (mock/live seam), webhooks verify
-  drizzle/       versioned SQL migrations (Neon-ready)
-web/             React 18 console (kanban, customers, follow-ups, stats, sync drawer)
+  src/lib/       db, auth, passwords, ai seam, webhook verification
+  drizzle/       versioned SQL migrations
+web/             React console: kanban, customers, follow-ups, stats, sync drawer
 shared/          status machine, roles, API shapes (single source of truth)
 docs/            API, ARCHITECTURE, SECURITY, DEPLOY, INTEGRATIONS, PROVIDERS, MOBILE
+screenshots/     1440px captures + 390/768px responsive checks
+demo/            demo-kanban.webm walkthrough
 ```
 
-## Verify
+## Tests
 
 ```bash
-npm run test -w server   # 32 tests: auth, authz, pipeline, webhooks, analytics, AI seam
+npm run test -w server   # 32 tests: auth, authz (cross-org → 404), pipeline, webhooks, analytics, AI seam
 ```
-
-## Screenshots (captured from the live local run)
-
-| Jobs kanban | Job + checklist | Follow-ups + AI draft |
-|---|---|---|
-| `screenshots/jobs-1440.png` | `screenshots/job-1440.png` | `screenshots/followups-1440.png` |
-
-| Stats | Offline sync queue | Demo video |
-|---|---|---|
-| `screenshots/stats-1440.png` | `screenshots/sync-1440.png` | `demo/demo-kanban.webm` |
-
-Responsive: `screenshots/jobs-390.png` (no horizontal overflow) + `jobs-768.png`.
 
 ## Honest limits
 
 - Single-process demo: in-memory rate limit (Redis sliding window in production).
 - No real-time sync between dispatchers (poll/refresh; webhooks cover async events).
 - Twilio/Stripe are verified skeletons with fixtures — no live charges or SMS.
-- Capacitor shell configured, native builds untested (no macOS runner here).
+- Capacitor shell configured, native builds untested.
 - AI drafts mock unless `OPENAI_BASE_URL` + `OPENAI_API_KEY` are set.
 
 ## License
 
-MIT — portfolio demo by Tiago Colo.
+MIT — portfolio demo by Tiago Colo. (LICENSE file to be added.)
